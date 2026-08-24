@@ -1,10 +1,11 @@
 import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'fs';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import path from 'path';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 const MODEL_FILE = path.join(DATA_DIR, 'model.json');
 
-export default function handler(req, res) {
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true });
 
@@ -20,8 +21,9 @@ export default function handler(req, res) {
     }
 
     res.status(405).end();
-  } catch (e) {
+  } catch (e: unknown) {
     console.error(e);
-    res.status(500).json({ ok: false, error: e.message });
+    const message = e instanceof Error ? e.message : 'Unknown error';
+    res.status(500).json({ ok: false, error: message });
   }
 }
