@@ -43,7 +43,12 @@ a {
 }
 
 @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+  :root {
+    --background: linear-gradient(
+      to bottom right,
+      rgba(10, 40, 30, 0.8),    /* 어두운 에메랄드 톤 */
+      rgba(0, 64, 48, 1)        /* 더 진한 호수빛 */
+    );
+    --foreground: #ededed;
   }
 }
